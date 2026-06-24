@@ -3,13 +3,10 @@ import io
 import base64
 from datetime import datetime, timedelta
 from typing import Union, Any
-from passlib.context import CryptContext
+import bcrypt
 import jwt
 import pyotp
 import qrcode
-
-# Crypt Context for password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT configuration
 SECRET_KEY = os.getenv("JWT_SECRET", "netra_super_secure_vault_secret_key_99812")
@@ -17,11 +14,16 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440")) # 24 hours
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    pwd_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(pwd_bytes, salt)
+    return hashed.decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
-        return pwd_context.verify(plain_password, hashed_password)
+        pwd_bytes = plain_password.encode('utf-8')
+        hashed_bytes = hashed_password.encode('utf-8')
+        return bcrypt.checkpw(pwd_bytes, hashed_bytes)
     except Exception:
         return False
 

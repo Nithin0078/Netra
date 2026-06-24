@@ -24,6 +24,13 @@ build/
 .env.production.local
 backend/.env
 frontend/.env
+*.json
+!package.json
+!package-lock.json
+!vercel.json
+!tsconfig.json
+!jsconfig.json
+
 
 # IDE and OS files
 .DS_Store
