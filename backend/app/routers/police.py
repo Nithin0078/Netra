@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import List, Optional
 from datetime import datetime
-from bson import ObjectId
 
 from app.database import get_database, fix_id
 from app.auth.rbac import verify_police

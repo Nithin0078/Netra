@@ -2,7 +2,6 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from app.auth.security import decode_access_token
 from app.database import get_database, fix_id
-from bson import ObjectId
 from typing import List
 
 security_scheme = HTTPBearer(auto_error=False)

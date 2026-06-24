@@ -6,7 +6,6 @@ import asyncio
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
-from bson import ObjectId
 
 from app.database import get_database
 from app.models.camera import Polygon
